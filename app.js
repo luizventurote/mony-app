@@ -53,6 +53,16 @@ function insertTransaction(description, value, date, callback){
     });
 }
 
+function formatDate(date) {
+
+    var new_date = new Date(date),
+        day      = new_date.getDate(),
+        month    = new_date.getMonth() + 1,
+        year     = new_date.getFullYear();
+
+    return [day, month, year].join('/');
+}
+
 function getTransactions(callback){
 
     var query = 'SELECT * FROM `transaction`';
@@ -78,7 +88,7 @@ function loadTransations() {
             html += row.description;
             html += '</td>';
             html += '<td>';
-            html += row.date;
+            html += formatDate(row.date);
             html += '</td>';
             html += '<td>';
             html += row.value;
