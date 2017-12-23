@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>Mony - Financial Manager</title>
+  </head>
+  <body>
+
+    <h1>Mony</h1>
+
+    <select name="month" id="app_month" style="display: none;">
+      <option value="jan">January</option>
+      <option value="feb">February</option>
+      <option value="mar">March</option>
+      <option value="apr">April</option>
+      <option value="may">May</option>
+      <option value="jun">June</option>
+      <option value="jul">July</option>
+      <option value="aug">August</option>
+      <option value="sep">September</option>
+      <option value="oct">October</option>
+      <option value="nov">November</option>
+      <option value="dec">December</option>
+    </select>
+
+    <select name="year" id="app_year" style="display: none;">
+      <option value="2017">2017</option>
+      <option value="2018">2018</option>
+    </select>
+    
+    <table id="table" border="1">
+        <thead>
+          <tr>
+            <td>Id</td>
+            <td>Description</td>
+            <td>Date</td>
+            <td>Value</td>
+          </tr>
+        </thead>
+        <tbody>
+        </tbody>
+    </table>
+
+    <form class="insert" onsubmit="return false;">
+
+        <label for="app_insert_description">Description</label>
+        <input type="text" id="app_insert_description" required>
+
+        <label for="app_insert_date">Date</label>
+        <input type="date" id="app_insert_date" required>
+
+        <label for="app_insert_value">Value</label>
+        <input type="number" id="app_insert_value" required>
+
+        <input type="submit" id="insert" value="Insert">
+
+    </div>
+
+    <script>
+      require('./app.js')
+    </script>
+
+  </body>
+</html>
