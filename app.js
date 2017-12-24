@@ -4,6 +4,14 @@ function el(selector) {
     return document.getElementById(selector);
 }
 
+function select(selector) {
+    return document.querySelector(selector);
+}
+
+function selectAll(selector) {
+    return document.querySelectorAll(selector);
+}
+
 function executeQuery(query, callback) {
 
     var mysql = require('mysql');
@@ -70,6 +78,15 @@ function getTransactions(callback){
     });
 }
 
+function deleteTransactions(id){
+
+    var query = 'DELETE FROM `transaction` WHERE id='+id;
+
+    executeQuery(query, function() {
+        callback(null);
+    });
+}
+
 function loadTransations() {
 
     // Get the mysql service
@@ -78,7 +95,7 @@ function loadTransations() {
         var html = '';
 
         rows.forEach(function(row){
-            html += '<tr>';
+            html += '<tr id="transaction_row_'+row.id+'">';
             html += '<td>';
             html += row.id;
             html += '</td>';
@@ -91,10 +108,15 @@ function loadTransations() {
             html += '<td>';
             html += row.value;
             html += '</td>';
+            html += '<td>';
+            html += '<div id="app_delete_transaction_'+row.id+'" data-delete-transaction="'+row.id+'" class="btn btn-mini btn-red delete">Delete</div>';
+            html += '</td>';
             html += '</tr>';
         });
 
         document.querySelector('#table > tbody').innerHTML = html;
+
+        enableDeleteAction();
     });
 }
 
@@ -116,3 +138,26 @@ el('insert').addEventListener('click', function() {
     });
 
 },false);
+
+function enableDeleteAction() {
+
+    var deleteLink = selectAll('.delete');
+
+    for (let i = 0; i < deleteLink.length; i++) {
+
+        deleteLink[i].addEventListener('click', function(event) {
+
+            if (confirm("sure do you want to delete " + this.id)) {
+
+                let transaction_id = this.getAttribute("data-delete-transaction"),
+                    element        = el('transaction_row_'+transaction_id);
+
+                element.parentNode.removeChild(element);
+
+                deleteTransactions(transaction_id);
+
+                event.preventDefault();
+            }
+        });
+    }
+}
