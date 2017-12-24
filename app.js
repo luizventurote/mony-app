@@ -1,5 +1,7 @@
 'strict mode'
 
+const remote = require('electron').remote; 
+
 function el(selector) {
     return document.getElementById(selector);
 }
@@ -127,8 +129,40 @@ function loadTransations() {
     });
 }
 
+function initTitleBar() { 
+
+    document.getElementById("min_btn").addEventListener("click", function (e) {
+
+        var window = remote.getCurrentWindow();
+        window.minimize(); 
+    });
+
+    document.getElementById("max_btn").addEventListener("click", function (e) {
+        
+        var window = remote.getCurrentWindow();
+
+        if (!window.isMaximized()) {
+            window.maximize();
+        } else {
+            window.unmaximize();
+        }  
+    });
+
+    document.getElementById("close_btn").addEventListener("click", function (e) {
+
+        var window = remote.getCurrentWindow();
+        window.close();
+    }); 
+}; 
+
 function startApp() {
-    loadTransations();
+
+    document.onreadystatechange = function () {
+        if (document.readyState == "complete") {
+            initTitleBar();
+            loadTransations(); 
+        }
+    };
 }
 
 startApp();

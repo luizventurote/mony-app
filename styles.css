@@ -1,6 +1,7 @@
 body {
 	font-family: Arial, sans-serif;
 	padding-bottom: 80px;
+	-webkit-app-region: drag;
 }
 
 h1 {
@@ -44,6 +45,57 @@ input[type='text'],
 input[type='date'],
 input[type='number'] {
 	height: 25px;
+}
+
+button {
+  -webkit-app-region: no-drag;
+}
+
+.main {
+	-webkit-app-region: no-drag;
+}
+
+.titlebar {
+  -webkit-user-select: none;
+  -webkit-app-region: drag;
+}
+
+.titlebar-btns {
+	float: left;
+    margin: 15px;
+}
+
+.titlebar-btns .icon {
+	cursor: pointer;
+	margin: 10px;
+}
+
+.non-visible {
+	display: none !important;
+}
+
+.icon {
+	background-repeat: no-repeat;
+	width: 20px;
+	height: 20px;
+	display: inline-block;
+}
+
+.icon-mini {
+	width: 15px;
+	height: 15px;
+}
+
+.icon-hide {
+	background-image: url('assets/images/hide.svg');
+}
+
+.icon-plus {
+	background-image: url('assets/images/plus.svg');
+}
+
+.icon-close {
+	background-image: url('assets/images/close.svg');
 }
 
 .logo {
