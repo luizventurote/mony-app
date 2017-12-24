@@ -1,25 +1,30 @@
 {
-  "name": "electron-quick-start",
+  "name": "mony-app",
   "version": "1.0.0",
-  "description": "A minimal Electron application",
+  "description": "Just a financial manager app.",
   "main": "main.js",
-  "scripts": {
-    "start": "electron ."
-  },
-  "repository": "https://github.com/electron/electron-quick-start",
+  "repository": "https://github.com/luizventurote/mony-app",
   "keywords": [
-    "Electron",
-    "quick",
-    "start",
-    "tutorial",
-    "demo"
+    "mony",
+    "money",
+    "financial manager"
   ],
-  "author": "GitHub",
-  "license": "CC0-1.0",
+  "author": "Luiz Venturote",
+  "license": "MIT",
   "devDependencies": {
-    "electron": "~1.7.8"
+    "electron": "~1.7.8",
+    "electron-builder": "^19.49.2",
+    "electron-packager": "^10.1.0",
   },
   "dependencies": {
+    "electron-debug": "^1.4.0",
+    "mysql": "*",
     "reset-css": "^2.2.1"
+  },
+  "scripts": {
+    "start": "electron .",
+    "package-mac": "electron-packager . --overwrite --platform=darwin --arch=x64 --icon=assets/icons/mac/icon.icns --prune=true --out=release-builds",
+    "package-win": "electron-packager . electron-tutorial-app --overwrite --asar=true --platform=win32 --arch=ia32 --icon=assets/icons/win/icon.ico --prune=true --out=release-builds --version-string.CompanyName=CE --version-string.FileDescription=CE --version-string.ProductName=\"Mony - Financial Manager\"",
+    "package-linux": "electron-packager . electron-tutorial-app --overwrite --asar=true --platform=linux --arch=x64 --icon=assets/icons/png/1024x1024.png --prune=true --out=release-builds"
   }
 }

@@ -1,7 +1,5 @@
 'strict mode'
 
-var mysql = require('mysql');
-
 function el(selector) {
     return document.getElementById(selector);
 }
