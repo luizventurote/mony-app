@@ -87,34 +87,41 @@ function deleteTransactions(id){
     });
 }
 
+function addTransationRow(id, description, date, value) {
+
+    var html = '';
+
+    html += '<tr id="transaction_row_'+id+'">';
+    html += '<td>';
+    html += id;
+    html += '</td>';
+    html += '<td>';
+    html += description;
+    html += '</td>';
+    html += '<td>';
+    html += formatDate(date);
+    html += '</td>';
+    html += '<td>';
+    html += value;
+    html += '</td>';
+    html += '<td>';
+    html += '<div id="app_delete_transaction_'+id+'" data-delete-transaction="'+id+'" class="btn btn-mini btn-red delete">Delete</div>';
+    html += '</td>';
+    html += '</tr>';
+
+    var table = document.querySelector('#table > tbody');
+
+    table.innerHTML = table.innerHTML + html;
+}
+
 function loadTransations() {
 
     // Get the mysql service
     getTransactions(function(rows){
 
-        var html = '';
-
         rows.forEach(function(row){
-            html += '<tr id="transaction_row_'+row.id+'">';
-            html += '<td>';
-            html += row.id;
-            html += '</td>';
-            html += '<td>';
-            html += row.description;
-            html += '</td>';
-            html += '<td>';
-            html += formatDate(row.date);
-            html += '</td>';
-            html += '<td>';
-            html += row.value;
-            html += '</td>';
-            html += '<td>';
-            html += '<div id="app_delete_transaction_'+row.id+'" data-delete-transaction="'+row.id+'" class="btn btn-mini btn-red delete">Delete</div>';
-            html += '</td>';
-            html += '</tr>';
+            addTransationRow(row.id, row.description, row.date, row.value);
         });
-
-        document.querySelector('#table > tbody').innerHTML = html;
 
         enableDeleteAction();
     });
@@ -133,8 +140,8 @@ el('insert').addEventListener('click', function() {
         value       = el('app_insert_value').value;
 
     // Get the mysql service
-    insertTransaction(description, value, date, function () {
-
+    insertTransaction(description, value, date, function (result) {
+        addTransationRow(result.insertId, description, date, value)
     });
 
 },false);
