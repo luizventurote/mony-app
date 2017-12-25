@@ -45,27 +45,37 @@
             <tr>
               <td>Id</td>
               <td>Description</td>
-              <td>Date</td>
-              <td>Value</td>
-              <td>Options</td>
+              <td class="align-center">Date</td>
+              <td class="align-center">Value</td>
+              <td></td>
             </tr>
           </thead>
           <tbody>
           </tbody>
       </table>
 
-      <form class="insert" onsubmit="return false;">
+      <div class="float-btn" id="btn_insert">
+        <div class="float-btn-icon float-btn-plus"></div>
+      </div>
 
+      <form id="transaction_insert_form" class="insert disabled" onsubmit="return false;">
+
+        <div class="filed">
           <label for="app_insert_description">Description</label>
           <input type="text" id="app_insert_description" required>
+        </div>
 
+        <div class="filed">
           <label for="app_insert_date">Date</label>
           <input type="date" id="app_insert_date" required>
+        </div>
 
+        <div class="filed">
           <label for="app_insert_value">Value</label>
           <input type="number" id="app_insert_value" required>
-
-          <input type="submit" id="insert" value="Insert" class="btn">
+        </div>
+          
+        <input type="submit" id="insert" value="Insert" class="btn btn-secondary">
 
       </form>
 

@@ -2,6 +2,7 @@ body {
 	font-family: Arial, sans-serif;
 	padding-bottom: 80px;
 	-webkit-app-region: drag;
+	color: #322153;
 }
 
 h1 {
@@ -22,7 +23,11 @@ table {
 }
 
 table tr {
-	border-bottom: 1px solid #e9e9e9;
+	border-bottom: .2px solid #e9e9e9;
+	-webkit-transition: all .2s ease-in-out;
+	-moz-transition: all .2s ease-in-out;
+	-o-transition: all .2s ease-in-out;
+	transition: all .2s ease-in-out;
 }
 
 table tr:hover {
@@ -31,6 +36,46 @@ table tr:hover {
 
 table td {
 	padding: 20px 10px 10px;
+}
+
+table thead td {
+    font-size: 10px;
+    text-transform: uppercase;
+    font-weight: bold;
+    letter-spacing: 1px;
+}
+
+table td.col-id {
+	width: 20px;
+	font-size: 10px;
+    color: #d6d6d6;
+    letter-spacing: 1px;
+}
+
+table td.col-date {
+	width: 120px;
+}
+
+table td.col-value {
+	width: 150px;
+}
+
+table td.col-options {
+	width: 10px;
+    padding-right: 20px;
+}
+
+table .icon.delete {
+	background: #e9e9e9;
+	cursor: pointer;
+	-webkit-transition: all .2s ease-in-out;
+	-moz-transition: all .2s ease-in-out;
+	-o-transition: all .2s ease-in-out;
+	transition: all .2s ease-in-out;
+}
+
+table tr:hover .icon.delete {
+	background: red;
 }
 
 label {
@@ -49,6 +94,13 @@ input[type='number'] {
 
 button {
   -webkit-app-region: no-drag;
+}
+
+.transition {
+	-webkit-transition: all 1s ease-in-out;
+	-moz-transition: all 1s ease-in-out;
+	-o-transition: all 1s ease-in-out;
+	transition: all 1s ease-in-out;
 }
 
 .main {
@@ -88,14 +140,20 @@ button {
 
 .icon-hide {
 	background-image: url('assets/images/hide.svg');
+    -webkit-mask: url(assets/images/hide.svg) no-repeat center;
+    mask: url(assets/images/hide.svg) no-repeat center;
 }
 
 .icon-plus {
 	background-image: url('assets/images/plus.svg');
+    -webkit-mask: url(assets/images/plus.svg) no-repeat center;
+    mask: url(assets/images/plus.svg) no-repeat center;
 }
 
 .icon-close {
 	background-image: url('assets/images/close.svg');
+    -webkit-mask: url(assets/images/close.svg) no-repeat center;
+    mask: url(assets/images/close.svg) no-repeat center;
 }
 
 .logo {
@@ -111,11 +169,16 @@ button {
 .btn {
 	cursor: pointer;
 	background: #00ffb5;
-	padding: 7px 10px 9px;
+    padding: 13px 22px 15px;
 	text-transform: uppercase;
 	letter-spacing: 1px;
 	border: 0;
 	display: inline-block;
+}
+
+.btn-secondary {
+    color: white;
+    background: #322153;
 }
 
 .btn-mini {
@@ -128,24 +191,102 @@ button {
     color: white;
 }
 
-.insert {
-	background: #fafafa;
-	max-width: 760px;
-    border-radius: 10px;
-    padding: 20px 0 20px 50px;
-    margin: auto;
-    border: 1px solid #e9e9e9;
-    box-shadow: 0 0 20px 0px rgba(0, 0, 0, 0.1);
+.float-btn {
+    background: #00f2a9;
+    width: 60px;
+    height: 60px;
+    float: right;
+    border-radius: 100%;
+    margin: 0;
+    cursor: pointer;
     position: fixed;
     bottom: 30px;
-    left: 0;
-    right: 0;
+    right: 40px;
+}
+
+.float-btn-icon {
+    -webkit-transition: all .2s ease-in-out;
+	-moz-transition: all .2s ease-in-out;
+	-o-transition: all .2s ease-in-out;
+	transition: all .2s ease-in-out;	
+}
+
+.float-btn-close,
+.float-btn-plus {
+	display: inline-block;
+    height: 30px;
+    position: absolute;
+    top: 14px;
+    left: 14px;
+    background-repeat: no-repeat;
+    background-size: 110px;
+    width: 30px;
+    font-size: 50px;
+    background-color: #ffffff;
+    -webkit-mask: url(assets/images/plus.svg) no-repeat center;
+    -webkit-mask-size: 25px;
+    mask: url(assets/images/plus.svg) no-repeat center;
+    mask-size: 25px;
+}
+
+.float-btn-close {
+	-webkit-transform: rotate(-45deg);
+	-moz-transform: rotate(-45deg);
+	-ms-transform: rotate(-45deg);
+	-o-transform: rotate(-45deg);
+}
+
+.insert {
+	background: #fafafa;
+    border-radius: 10px;
+    padding: 25px;
+    margin: auto;
+    border: 1px solid #ececec;
+    box-shadow: 0 0 60px 0px rgba(0, 0, 0, 0.08);
+    width: 100%;
+    max-width: 240px;
+    position: fixed;
+    right: 120px;
+    bottom: 60px;
+    bottom: -50%;
+	opacity: 0;
+    margin: 0;
+    -webkit-transition: opacity .5s ease-in-out, bottom .3s ease-in-out;
+	-moz-transition: opacity .5s ease-in-out, bottom .3s ease-in-out;
+	-o-transition: opacity .5s ease-in-out, bottom .3s ease-in-out;
+	transition: opacity .5s ease-in-out, bottom .3s ease-in-out;	
+}
+
+.insert.active {
+	opacity: 1;
+    bottom: 60px;
+}
+
+.filed {
+	margin-bottom: 20px;
+}
+
+.filed label {
+	display: block;
+	margin-bottom: 10px;
+}
+
+.filed input {
+	width: 100%;
 }
 
 .insert label:first-child {
 	margin-left: 0;
 }
 
-.insert .btn {
-	margin-left: 10px;
+.align-center {
+	text-align: center;
+}
+
+.align-right {
+	text-align: right;
+}
+
+.align-left {
+	text-align: left;
 }

@@ -94,20 +94,21 @@ function addTransationRow(id, description, date, value) {
     var html = '';
 
     html += '<tr id="transaction_row_'+id+'">';
-    html += '<td>';
+    html += '<td class="col-id">';
     html += id;
     html += '</td>';
-    html += '<td>';
+    html += '<td class="col-description">';
     html += description;
     html += '</td>';
-    html += '<td>';
+    html += '<td class="col-date align-center">';
     html += formatDate(date);
     html += '</td>';
-    html += '<td>';
+    html += '<td class="col-value align-center">';
     html += value;
     html += '</td>';
-    html += '<td>';
-    html += '<div id="app_delete_transaction_'+id+'" data-delete-transaction="'+id+'" class="btn btn-mini btn-red delete">Delete</div>';
+    html += '<td class="col-options">';
+    //html += '<div id="app_delete_transaction_'+id+'" data-delete-transaction="'+id+'" class="btn btn-mini btn-red delete">Delete</div>';
+    html += '<span id="app_delete_transaction_'+id+'" data-delete-transaction="'+id+'" class="icon icon-mini icon-close delete"></span>';
     html += '</td>';
     html += '</tr>';
 
@@ -179,6 +180,11 @@ el('insert').addEventListener('click', function() {
     });
 
 },false);
+
+select('#btn_insert').addEventListener('click', function() {
+    this.querySelector('.float-btn-icon').classList.toggle('float-btn-close');
+    document.querySelector('#transaction_insert_form').classList.toggle('active');
+});
 
 function enableDeleteAction() {
 
