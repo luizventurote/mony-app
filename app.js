@@ -1,6 +1,8 @@
 'strict mode'
 
-const remote = require('electron').remote; 
+const remote = require('electron').remote;
+
+var webStorageEnabled = true;
 
 function el(selector) {
     return document.getElementById(selector);
@@ -14,7 +16,7 @@ function selectAll(selector) {
     return document.querySelectorAll(selector);
 }
 
-function executeQuery(query, callback) {
+function getConnection() {
 
     var mysql = require('mysql');
 
@@ -29,27 +31,46 @@ function executeQuery(query, callback) {
     // connect to mysql
     connection.connect(function(err) {
 
-        // in case of error
         if(err){
             console.log(err);
         }
     });
 
-    connection.query(query, function(err, rows, fields) {
+    return connection;
+}
 
-        if(err){
-            console.log("An error ocurred performing the query.");
-            console.log(err);
-            return;
-        }
+function checkConnection() {
 
-        callback(rows);
-    });
+    var connection = getConnection();
 
     // Close the connection
     connection.end(function(){
-        // The connection has been closed
+
     });
+}
+
+function executeQuery(query, callback) {
+
+    var connection = getConnection();
+
+    if(connection) {
+
+        connection.query(query, function(err, rows, fields) {
+
+            if(err){
+                console.log("An error ocurred performing the query.");
+                console.log(err);
+                return;
+            }
+
+            callback(rows);
+        });
+
+        // Close the connection
+        connection.end(function(){
+            // The connection has been closed
+        });
+    }
 }
 
 function insertTransaction(description, value, date, callback){
@@ -85,7 +106,6 @@ function deleteTransactions(id){
     var query = 'DELETE FROM `transaction` WHERE id='+id;
 
     executeQuery(query, function() {
-        callback(null);
     });
 }
 
@@ -117,17 +137,33 @@ function addTransationRow(id, description, date, value) {
     table.innerHTML = table.innerHTML + html;
 }
 
-function loadTransations() {
+function loadTransations(databaseEnabled) {
 
-    // Get the mysql service
-    getTransactions(function(rows){
+    if(!webStorageEnabled) {
 
-        rows.forEach(function(row){
-            addTransationRow(row.id, row.description, row.date, row.value);
+        // Get the mysql service
+        getTransactions(function(rows){
+
+            rows.forEach(function(row){
+                addTransationRow(row.id, row.description, row.date, row.value);
+            });
+
+            enableDeleteAction();
         });
 
-        enableDeleteAction();
-    });
+    } else {
+
+        // Use Web Storage 
+        getLocalTransactions(function(rows) {
+
+            rows.forEach(function(row){
+
+                addTransationRow(row.val.id, row.val.description, row.val.date, row.val.value);
+            });
+
+            enableDeleteAction();
+        });
+    }
 }
 
 function initTitleBar() { 
@@ -160,8 +196,12 @@ function startApp() {
 
     document.onreadystatechange = function () {
         if (document.readyState == "complete") {
+
+            checkConnection();
+
             initTitleBar();
-            loadTransations(); 
+
+            loadTransations();
         }
     };
 }
@@ -174,10 +214,18 @@ el('insert').addEventListener('click', function() {
         date        = el('app_insert_date').value,
         value       = el('app_insert_value').value;
 
-    // Get the mysql service
-    insertTransaction(description, value, date, function (result) {
-        addTransationRow(result.insertId, description, date, value)
-    });
+    if(webStorageEnabled) {
+
+        insertLocalTransaction(description, value, date, function (result) {
+            addTransationRow(result.id, description, date, value)
+        })
+
+    } else {
+
+        insertTransaction(description, value, date, function (result) {
+            addTransationRow(result.insertId, description, date, value)
+        });
+    }
 
 },false);
 
@@ -201,10 +249,88 @@ function enableDeleteAction() {
 
                 element.parentNode.removeChild(element);
 
-                deleteTransactions(transaction_id);
+                if(webStorageEnabled) {
+                    deleteLocalTransactions(transaction_id);
+                } else {
+                    deleteTransactions(transaction_id);
+                }
 
                 event.preventDefault();
             }
         });
     }
 }
+
+function getStorageid() {
+
+    var id = localStorage.getItem('item_id');
+
+    if(!id) {
+
+        localStorage.setItem('item_id', 1);
+        return 1;
+
+    } else {
+
+        id++;
+        localStorage.setItem('item_id', id);
+    }
+
+    return id;
+}
+
+function insertLocalTransaction(description, value, date, callback){
+
+    var id = getStorageid();
+
+    var transaction = {
+        'id': id,
+        'description': description, 
+        'value': value,
+        'currency': 'USD',
+        'date': date,
+        'status': 1,
+    }
+
+    localStorage.setItem('transaction_'+id, JSON.stringify(transaction));
+
+    callback(getLocalTransactionById(id));
+}
+
+function getLocalTransactionById(id){
+
+    var transaction = JSON.parse(localStorage.getItem('transaction_'+id));
+
+    transaction.id = id;
+
+    return transaction;
+}
+
+function getLocalTransactions(callback){
+
+    var query = 'transaction_*', i, results = [];
+
+    for (i in localStorage) {
+
+        if (localStorage.hasOwnProperty(i)) {
+            if (i.match(query) || (!query && typeof i === 'string')) {
+                value = JSON.parse(localStorage.getItem(i));
+                results.push({key:i,val:value});
+            }
+        }
+    }
+
+    callback(results);
+}
+
+function deleteLocalTransactions(id){
+
+    return localStorage.removeItem('transaction_'+id);
+}
+
+
+
+
+
+
+
