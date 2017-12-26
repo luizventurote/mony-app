@@ -3,6 +3,7 @@ body {
 	padding-bottom: 80px;
 	-webkit-app-region: drag;
 	color: #322153;
+    overflow: hidden;
 }
 
 h1 {
@@ -87,6 +88,7 @@ label {
 }
 
 input[type='text'],
+input[type='password'],
 input[type='date'],
 input[type='number'] {
 	height: 25px;
@@ -94,6 +96,16 @@ input[type='number'] {
 
 button {
   -webkit-app-region: no-drag;
+}
+
+.section-title {
+    border-bottom: 1px solid #e9e9e9;
+    padding-bottom: 15px;
+    margin-bottom: 25px;
+    font-size: 14px;
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 1px;
 }
 
 .transition {
@@ -151,9 +163,15 @@ button {
 }
 
 .icon-close {
-	background-image: url('assets/images/close.svg');
+    background-image: url('assets/images/close.svg');
     -webkit-mask: url(assets/images/close.svg) no-repeat center;
     mask: url(assets/images/close.svg) no-repeat center;
+}
+
+.icon-settings {
+    background-image: url('assets/images/settings.svg');
+    -webkit-mask: url(assets/images/settings.svg) no-repeat center;
+    mask: url(assets/images/settings.svg) no-repeat center;
 }
 
 .logo {
@@ -247,10 +265,10 @@ button {
     max-width: 240px;
     position: fixed;
     right: 120px;
-    bottom: 60px;
     bottom: -50%;
 	opacity: 0;
     margin: 0;
+    z-index: 30;
     -webkit-transition: opacity .5s ease-in-out, bottom .3s ease-in-out;
 	-moz-transition: opacity .5s ease-in-out, bottom .3s ease-in-out;
 	-o-transition: opacity .5s ease-in-out, bottom .3s ease-in-out;
@@ -269,6 +287,7 @@ button {
 .filed label {
 	display: block;
 	margin-bottom: 10px;
+    margin-left: 0;
 }
 
 .filed input {
@@ -290,3 +309,77 @@ button {
 .align-left {
 	text-align: left;
 }
+
+.btn-settings {
+    position: absolute;
+    top: 25px;
+    right: 35px;
+    width: 20px;
+    height: 20px;
+    cursor: pointer;
+}
+
+.btn-settings:hover {
+    transition: 1.70s;
+    -webkit-transition: 1.70s;
+    -moz-transition: 1.70s;
+    -ms-transition: 1.70s;
+    -o-transition: 1.70s;
+    -webkit-transform: rotate(180deg);
+    -moz-transform: rotate(180deg);
+    -o-transform: rotate(180deg);
+    -ms-transform: rotate(180deg);
+    transform: rotate(180deg);
+}
+
+.fade-effect {
+    opacity: 1;
+    -webkit-transition: opacity .3s ease-in-out;
+    -moz-transition: opacity .3s ease-in-out;
+    -o-transition: opacity .3s ease-in-out;
+    transition: opacity .3s ease-in-out;
+}
+
+.fade-animate {
+    opacity: 0;
+}
+
+.settings-box {
+    width: 420px;
+    margin: auto;
+    position: absolute;
+    left: 0;
+    right: -150%;
+    opacity: 0;
+    -webkit-transition: opacity .5s ease-in-out, right .5s ease-in-out;
+    -moz-transition: opacity .5s ease-in-out, right .5s ease-in-out;
+    -o-transition: opacity .5s ease-in-out, right .5s ease-in-out;
+    transition: opacity .5s ease-in-out, right .5s ease-in-out;
+}
+
+.settings-box.active {
+    opacity: 1;
+    right: 0;
+}
+
+.settings-box .btn-submit {
+    margin-top: 10px;
+}
+
+.transactions-table {
+    left: 0;
+    position: absolute;
+    right: 0;
+    z-index: 10;
+    -webkit-transition: opacity .5s ease-in-out, left .5s ease-in-out;
+    -moz-transition: opacity .5s ease-in-out, left .5s ease-in-out;
+    -o-transition: opacity .5s ease-in-out, left .5s ease-in-out;
+    transition: opacity .5s ease-in-out, left .5s ease-in-out;
+}
+
+.transactions-table.disabled {
+    left: -150%;
+    opacity: 0;
+}
+
+

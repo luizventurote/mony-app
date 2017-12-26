@@ -18,8 +18,31 @@
 
     <h1 class="logo">Mony</h1>
 
+    <div id="btn_settings" class="icon icon-settings btn-settings"></div>
+
     <div class="main">
-      
+
+        <form id="app_settings" class="settings settings-box" onsubmit="return false;">
+            <div class="section-title">Database Settings</div>
+            <div class="filed">
+                <label for="app_mysql_host">Host</label>
+                <input type="text" id="app_mysql_host">
+            </div>
+            <div class="filed">
+                <label for="app_mysql_user">User</label>
+                <input type="text" id="app_mysql_user">
+            </div>
+            <div class="filed">
+                <label for="app_mysql_password">Password</label>
+                <input type="password" id="app_mysql_password">
+            </div>
+            <div class="filed">
+                <label for="app_mysql_database">Database name</label>
+                <input type="text" id="app_mysql_database">
+            </div>
+            <input type="submit" id="app_save_settings_btn" value="Save Settings" class="btn btn-secondary btn-submit">
+        </form>
+
       <select name="month" id="app_month" style="display: none;">
         <option value="jan">January</option>
         <option value="feb">February</option>
@@ -40,7 +63,7 @@
         <option value="2018">2018</option>
       </select>
       
-      <table id="table" 0>
+      <table id="table" class="transactions-table">
           <thead>
             <tr>
               <td>Id</td>

@@ -22,10 +22,10 @@ function getConnection() {
 
     // Add the credentials to access your database
     var connection = mysql.createConnection({
-        host     : 'localhost',
-        user     : 'root',
-        password : 'root',
-        database : 'mony_app'
+        host     : localStorage.getItem('setting_app_mysql_host'),
+        user     : localStorage.getItem('setting_app_mysql_user'),
+        password : localStorage.getItem('setting_app_mysql_password'),
+        database : localStorage.getItem('setting_app_mysql_database')
     });
 
     // connect to mysql
@@ -199,6 +199,8 @@ function startApp() {
 
             checkConnection();
 
+            loadSettings();
+
             initTitleBar();
 
             loadTransations();
@@ -306,21 +308,33 @@ function getLocalTransactionById(id){
     return transaction;
 }
 
-function getLocalTransactions(callback){
+function queryLocalStorage(query){
 
-    var query = 'transaction_*', i, results = [];
+    var isJSON = require('is-json');
+
+    var i, results = [];
 
     for (i in localStorage) {
 
         if (localStorage.hasOwnProperty(i)) {
             if (i.match(query) || (!query && typeof i === 'string')) {
-                value = JSON.parse(localStorage.getItem(i));
+
+                value = localStorage.getItem(i);
+
+                if(isJSON(value)) {
+                    value = JSON.parse(value);
+                }
+
                 results.push({key:i,val:value});
             }
         }
     }
 
-    callback(results);
+    return results;
+}
+
+function getLocalTransactions(callback) {
+    callback(queryLocalStorage('transaction_*'));
 }
 
 function deleteLocalTransactions(id){
@@ -328,7 +342,48 @@ function deleteLocalTransactions(id){
     return localStorage.removeItem('transaction_'+id);
 }
 
+select('#btn_settings').addEventListener('click', function() {
 
+    var table = document.querySelector('#table');
+
+    table.classList.toggle('disabled');
+
+    document.querySelector('#app_settings').classList.toggle('active');
+});
+
+select('#app_save_settings_btn').addEventListener('click', function () {
+    saveSettings();
+});
+
+function saveSettings() {
+
+    var inputs = document.querySelectorAll('#app_settings input:not(.btn-submit)');
+
+    for(var i = 0; i < inputs.length; i++) {
+
+        let setting_id = inputs[i].id;
+
+        if(inputs[i].value != '') {
+            localStorage.setItem('setting_'+setting_id, inputs[i].value);
+        }
+    }
+}
+
+function getSettings() {
+    return queryLocalStorage('setting_*');
+}
+
+function loadSettings() {
+
+    var settings = getSettings();
+
+    for(var i = 0; i < settings.length; i++) {
+
+        let selector = settings[i].key.replace('setting_', '');
+
+        document.querySelector('#app_settings #'+selector).value = settings[i].val;
+    }
+}
 
 
 
