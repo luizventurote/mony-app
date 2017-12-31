@@ -100,6 +100,14 @@ input[type='password'],
 input[type='date'],
 input[type='number'] {
 	height: 25px;
+    padding-left: 8px;
+}
+
+input:focus,
+select:focus,
+textarea:focus,
+button:focus {
+    outline: none;
 }
 
 button {
