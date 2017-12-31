@@ -8,17 +8,21 @@
   </head>
   <body>
 
-    <div class="titlebar" id="title-bar">
-        <div class="titlebar-btns" id="title_bar_btns">
-             <span id="close_btn" class="icon icon-mini icon-close"></span>
-             <span id="min_btn" class="icon icon-mini icon-hide"></span>
-             <span id="max_btn" class="icon icon-mini icon-plus non-visible"></span>
-        </div>
-   </div>
+  <header>
 
-    <h1 class="logo">Mony</h1>
+      <div class="titlebar" id="title-bar">
+          <div class="titlebar-btns" id="title_bar_btns">
+              <span id="close_btn" class="icon icon-mini icon-close"></span>
+              <span id="min_btn" class="icon icon-mini icon-hide"></span>
+              <span id="max_btn" class="icon icon-mini icon-plus non-visible"></span>
+          </div>
+      </div>
 
-    <div id="btn_settings" class="icon icon-settings btn-settings"></div>
+      <h1 class="logo">Mony</h1>
+
+      <div id="btn_settings" class="icon icon-settings btn-settings"></div>
+
+  </header>
 
     <div class="main">
 
@@ -62,20 +66,22 @@
         <option value="2017">2017</option>
         <option value="2018">2018</option>
       </select>
-      
-      <table id="table" class="transactions-table">
-          <thead>
-            <tr>
-              <td>Id</td>
-              <td>Description</td>
-              <td class="align-center">Date</td>
-              <td class="align-center">Value</td>
-              <td></td>
-            </tr>
-          </thead>
-          <tbody>
-          </tbody>
-      </table>
+
+        <div class="main-table-box">
+            <table id="table" class="transactions-table">
+                <thead>
+                <tr>
+                    <td>Id</td>
+                    <td>Description</td>
+                    <td class="align-center">Date</td>
+                    <td class="align-center">Value</td>
+                    <td></td>
+                </tr>
+                </thead>
+                <tbody>
+                </tbody>
+            </table>
+        </div>
 
       <div class="float-btn" id="btn_insert">
         <div class="float-btn-icon float-btn-plus"></div>

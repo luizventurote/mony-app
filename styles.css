@@ -1,9 +1,17 @@
+html,
+body {
+    height: 100%;
+}
+
 body {
 	font-family: Arial, sans-serif;
 	padding-bottom: 80px;
-	-webkit-app-region: drag;
 	color: #322153;
     overflow: hidden;
+}
+
+header {
+    -webkit-app-region: drag;
 }
 
 h1 {
@@ -115,8 +123,19 @@ button {
 	transition: all 1s ease-in-out;
 }
 
+.main-table-box {
+    padding-bottom: 350px;
+    height: 100%;
+}
+
 .main {
 	-webkit-app-region: no-drag;
+    display: block;
+    height: 100%;
+    position: relative;
+    width: 100%;
+    overflow: hidden;
+    overflow-y: scroll;
 }
 
 .titlebar {
@@ -220,6 +239,7 @@ button {
     position: fixed;
     bottom: 30px;
     right: 40px;
+    z-index: 50;
 }
 
 .float-btn-icon {
@@ -382,4 +402,22 @@ button {
     opacity: 0;
 }
 
+/* Scrollbar */
+::-webkit-scrollbar {
+    width: 5px;
+}
 
+::-webkit-scrollbar-track {
+    background: transparent;
+    -webkit-border-radius: 0;
+    border-radius: 0;
+}
+
+::-webkit-scrollbar-thumb {
+    -webkit-border-radius: 0;
+    border-radius: 0;
+    background: #322153;
+}
+::-webkit-scrollbar-thumb:window-inactive {
+    background: #322153;
+}
